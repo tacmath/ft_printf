@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/03 11:43:48 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 11:18:03 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 16:39:00 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,33 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include "printf.h"
+
+void	ft_nothingadd(t_printf *map)
+{
+	char	c;
+	char	*fill;
+	int		n;
+
+	if (map->conv != '\0')
+		ft_charadd(map, map->conv);
+	else
+	{
+		if (map->nb_space > 0)
+		{
+			c = ' ';
+			if (map->null == '0' && map->neg != '-')
+				c = '0';
+			fill = ft_memalloc(map->nb_space + 1);
+			n = -1;
+			while (++n < map->nb_space)
+				fill[n] = c;
+			write(1, fill, map->nb_space);
+			free(fill);
+			map->sizefinal += map->nb_space;
+		}
+		map->all += map->sizeflags - 1;
+	}
+}
 
 void	ft_basic(t_printf *map, va_list *ap)
 {
@@ -32,6 +59,8 @@ void	ft_basic(t_printf *map, va_list *ap)
 		ft_allunsigned(map, (uintmax_t)va_arg(*ap, unsigned int));
 	else if (map->conv == '%')
 		ft_percentadd(map);
+	else
+		ft_nothingadd(map);
 }
 
 void	ft_treatall(t_printf *map, char *format, va_list *ap)
@@ -41,42 +70,55 @@ void	ft_treatall(t_printf *map, char *format, va_list *ap)
 	n = map->all;
 	ft_check(map, format);
 	if (n == map->all)
+		ft_longlong(map, ap);
+	if (n == map->all)
 		ft_long(map, ap);
 	if (n == map->all)
 		ft_short(map, ap);
-	if (n == map->all)
-		ft_othersize(map, ap);
 	if (n == map->all)
 		ft_basic(map, ap);
 	ft_free_struct(map);
 }
 
-int	ft_printf(const char *restrict format, ...)
+void	ft_init_struct(t_printf *map)
 {
-	va_list	ap;
-	int		m;
+	map->all = 0;
+	map->sizefinal = 0;
+	map->sizeflags = 0;
+	map->conv = 0;
+	map->diez = 0;
+	map->neg = 0;
+	map->pos = 0;
+	map->null = 0;
+	map->space = 0;
+	map->nb_space = 0;
+	map->precision = -1;
+	map->lenth.l = 0;
+	map->lenth.h = 0;
+	map->lenth.j = 0;
+	map->lenth.z = 0;
+	map->lenth.upl = 0;
+}
+
+int		ft_printf(const char *restrict format, ...)
+{
+	va_list		ap;
+	int			n;
 	t_printf	*map;
 
 	if (!(map = malloc(sizeof(t_printf))))
 		return (0);
-	map->all = 0;
-	map->sizefinal = 0;
+	ft_init_struct(map);
 	va_start(ap, format);
 	while (format[map->all])
 	{
 		if (format[map->all] == '%')
-		{
-			m = map->all;
 			ft_treatall(map, (char*)&format[map->all], &ap);
-			if (map->all == m)
-			{
-				write(1, "%", 1);
-				map->all += 1;
-			}
-		}
 		else
 			ft_normalstr(map, (char*)&format[map->all]);
 	}
-	va_end(ap);					//faire un free map
-	return (map->sizefinal);
+	va_end(ap);
+	n = map->sizefinal;
+	free(map);
+	return (n);
 }

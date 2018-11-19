@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/03 11:43:48 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 11:48:48 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 16:04:33 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,7 @@ char	*ft_strncpy(char *dest, char *src, int i)
 	return (dest);
 }
 
-void		ft_normalstr(t_printf *map, char *str)
+void	ft_normalstr(t_printf *map, char *str)
 {
 	int		n;
 	char	*tmp;

@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/16 11:37:33 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 13:48:15 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 16:51:35 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -109,9 +109,9 @@ void	ft_octaladd(t_printf *map, uintmax_t param)
 		str = ft_addstr(str, "0", 0);
 		pos++;
 	}
-	if (map->precision == 0 && param == 0)
+	if ((map->precision == 0 || map->diez == '#') && param == 0)
 		str[pos] = '\0';
-	ft_fill(map, &str, pos);
+	ft_fill(map, &str, 0);
 	n = ft_strlen(str);
 	write(1, str, n);
 	free(str);

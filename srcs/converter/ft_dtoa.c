@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/05 12:17:50 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/05 12:19:24 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 16:05:14 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,12 +44,12 @@ static int		ft_len(long double nb)
 		nb /= 10;
 		len++;
 	}
-	return (len);	
+	return (len);
 }
 
 void			ft_dtoa(char **str, long double param, int precision)
 {
-	int		len;
+	int			len;
 	uintmax_t	nb;
 
 	len = ft_len(param);

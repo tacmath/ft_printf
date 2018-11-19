@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/05 11:53:24 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 11:49:54 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 15:59:59 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,22 +37,12 @@ void	ft_free_struct(t_printf *map)
 	map->null = 0;
 	map->space = 0;
 	map->nb_space = 0;
-	map->precision = 0;
-	free(map->lenth);
-	map->lenth = 0;
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int n;
-
-	n = -1;
-	if (s1[0] != s2[0])
-		return (0);
-	while (s1[++n] != '\0' && s2[n] != '\0')
-		if (s1[n] != s2[n])
-			return (0);
-	return(1);
+	map->precision = -1;
+	map->lenth.l = 0;
+	map->lenth.h = 0;
+	map->lenth.j = 0;
+	map->lenth.z = 0;
+	map->lenth.upl = 0;
 }
 
 int		ft_strchr(char *str, char c)

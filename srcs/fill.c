@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/16 11:44:14 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 14:27:24 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 15:59:21 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ void	ft_fill(t_printf *map, char **str, int pos)
 		n = -1;
 		while (++n < len)
 			zero[n] = '0';
-		*str = ft_addstr(*str, zero, pos);				//mettre des write
+		*str = ft_addstr(*str, zero, pos);
 		ft_strdel(&zero);
 	}
 	ft_fill_space(map, str, 1);

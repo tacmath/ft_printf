@@ -4,7 +4,7 @@ int ft_printf(const char *format, ...);
 
 int main(int ac, char **av)
 {
-	ft_printf("ok%d%%%hhd\n", 20, 1000);
-	printf("ok%d%%%hhd\n", 20, 1000);
+	ft_printf("%.3o\n", 1);
+	printf("%.3o\n", 1);
 	return (0);
 }
