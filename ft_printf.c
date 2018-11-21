@@ -51,6 +51,8 @@ void	ft_basic(t_printf *map, va_list *ap)
 		ft_charadd(map, va_arg(*ap, int));
 	else if (map->conv == 'p')
 		ft_convpadd(map, va_arg(*ap, void*));
+	else if (map->conv == 'f' && (map->lenth.upl == 1 || map->lenth.l >= 1))
+		ft_doubleadd(map, va_arg(*ap, long double));
 	else if (map->conv == 'f')
 		ft_doubleadd(map, (long double)va_arg(*ap, double));
 	else if (map->conv == 'd' || map->conv == 'i')

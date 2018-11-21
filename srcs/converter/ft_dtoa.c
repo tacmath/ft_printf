@@ -15,21 +15,14 @@
 
 static uintmax_t	ft_get_nb_decimal(long double param, int precision)
 {
-	uintmax_t decimal;
-	uintmax_t pow;
-
-	pow = 1;
 	if (param < 0)
-		param = param + (uintmax_t)(-param);
-	else
-		param = param - (uintmax_t)(param);
+		param = -param;
+	param = param - (uintmax_t)(param);
+	precision++;
 	while (--precision >= 0)
-		pow = 10 * pow;
-	if (param < 0)
-		decimal = (uintmax_t)(-param * pow);
-	else
-		decimal = (uintmax_t)(param * pow);
-	return (decimal);
+		param = 10 * param;
+	param = (uintmax_t)param;
+	return (param);
 }
 
 static int		ft_len(long double nb)
@@ -47,10 +40,17 @@ static int		ft_len(long double nb)
 	return (len);
 }
 
+static int		ft_dmod(long double nb, int mod)
+{
+	if (nb < 0)
+		nb = -nb;
+	return ((int)(nb - ((uintmax_t)(nb / mod) * mod)));
+}
+
 void			ft_dtoa(char **str, long double param, int precision)
 {
 	int			len;
-	uintmax_t	nb;
+	long double		nb;
 
 	len = ft_len(param);
 	if (precision != 0)
@@ -69,14 +69,17 @@ void			ft_dtoa(char **str, long double param, int precision)
 	len = len - precision - 1;
 	while (--len >= 0)
 	{
-		(*str)[len] = nb % 10 + '0';
+		(*str)[len] = ft_dmod(nb, 10) + '0';
 		nb = nb / 10;
 	}
 	nb = ft_get_nb_decimal(param, precision);
 	len = ft_len(param) + precision;
+	if (ft_dmod(nb, 10) >= 5)
+		nb += 10;
+	nb = nb / 10;
 	while (--precision >= 0)
 	{
-		(*str)[--len] = nb % 10 + '0';
+		(*str)[--len] = ft_dmod(nb, 10) + '0';
 		nb = nb / 10;
 	}
 	if (param < 0)
