@@ -12,31 +12,38 @@
 # **************************************************************************** #
 
 NAME = libftprintf.a
-FLAG = -Wall -Werror -Wextra -I includes/
-SRC = \
-	  srcs/converter/ft_itoa.c\
-	  srcs/converter/ft_itoa_base.c\
-	  srcs/converter/ft_itoa_octal.c\
-	  srcs/converter/ft_atoi.c\
-	  srcs/converter/ft_dtoa.c\
-	  srcs/utils.c\
-	  srcs/str.c\
-	  srcs/check.c\
-	  srcs/addother.c\
-	  srcs/addunsigned.c\
-	  srcs/fill.c\
-	  srcs/treatlenth.c\
-	  ft_printf.c\
+CONVDIR = converter/
+SRCDIR = srcs/
+INCDIR = includes/
+CONVFILES =	ft_itoa.c\
+			ft_itoa_base.c\
+			ft_itoa_octal.c\
+			ft_atoi.c\
+			ft_dtoa.c\
 
+SRCFILES =	utils.c\
+			str.c\
+			check.c\
+			addother.c\
+			addunsigned.c\
+			fill.c\
+			treatlenth.c\
+			$(addprefix $(CONVDIR),$(CONVFILES))\
+
+INCFILES = printf.h
+SRC = $(addprefix $(SRCDIR),$(SRCFILES)) ft_printf.c
+INC = $(addprefix $(INCDIR),$(INCFILES))
 OBJ = $(SRC:.c=.o)
+FLAG = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	ar sur $@ $^
+%.o: %.c $(INC)
+	gcc -c -o $@ $< -I includes $(FLAG)
 
-%.o: %.c
-	gcc -c -o $@ $< $(FLAG)
+$(NAME): $(OBJ) $(INC)
+	ar rc $@ $(OBJ)
+	ranlib $@
 
 clean:
 	rm -f $(OBJ)

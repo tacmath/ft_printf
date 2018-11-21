@@ -53,16 +53,14 @@ void		ft_check(t_printf *map, char *str)
 		if (str[n] >= '1' && str[n] <= '9')
 		{
 			map->nb_space = ft_atoi(&(str[n]));
-			while (str[++n] >= '0' && str[n] <= '9')
-				;
-			n--;
+			while (str[n + 1] >= '0' && str[n + 1] <= '9')
+				n++;
 		}
 		if (str[n] == '.')
 		{
 			map->precision = ft_atoi(&(str[n + 1]));
-			while (str[++n] >= '0' && str[n] <= '9')
-				;
-			n--;
+			while (str[n + 1] >= '0' && str[n + 1] <= '9')
+				n++;
 		}
 		ft_get_lenth(map, str[n]);
 	}
