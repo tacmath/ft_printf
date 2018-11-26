@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/03 11:43:48 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 16:39:00 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/22 12:02:45 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,13 +51,13 @@ void	ft_basic(t_printf *map, va_list *ap)
 		ft_charadd(map, va_arg(*ap, int));
 	else if (map->conv == 'p')
 		ft_convpadd(map, va_arg(*ap, void*));
-	else if (map->conv == 'f' && (map->lenth.upl == 1 || map->lenth.l >= 1))
+	else if (map->conv == 'f' && map->lenth.upl == 1)
 		ft_doubleadd(map, va_arg(*ap, long double));
 	else if (map->conv == 'f')
 		ft_doubleadd(map, (long double)va_arg(*ap, double));
 	else if (map->conv == 'd' || map->conv == 'i')
 		ft_intadd(map, (intmax_t)va_arg(*ap, int));
-	else if (ft_strchr("uxXo", map->conv))
+	else if (ft_strchr("uxXob", map->conv))
 		ft_allunsigned(map, (uintmax_t)va_arg(*ap, unsigned int));
 	else if (map->conv == '%')
 		ft_percentadd(map);
@@ -70,7 +70,14 @@ void	ft_treatall(t_printf *map, char *format, va_list *ap)
 	int n;
 
 	n = map->all;
-	ft_check(map, format);
+	ft_check(map, format, ap, 0);
+	if (map->precision < -1)
+		map->precision = -1;
+	if (map->nb_space < 0)
+	{
+		map->nb_space = -map->nb_space;
+		map->neg = '-';
+	}
 	if (n == map->all)
 		ft_longlong(map, ap);
 	if (n == map->all)

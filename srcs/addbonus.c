@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_itoa_octal.c                                  .::    .:/ .      .::   */
+/*   addbonus.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/05 12:17:50 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 14:29:42 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/22 11:15:14 by mtaquet      #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/22 11:23:57 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-void	ft_itoa_octal(char **str, uintmax_t param)
+void	ft_binaireadd(t_printf *map, uintmax_t param)
 {
-	int			len;
-	uintmax_t	nb;
+	int		n;
+	char	*str;
 
-	nb = param;
-	len = 1;
-	if (param == 0)
-		len++;
-	while (param != 0)
-	{
-		param = param / 8;
-		len++;
-	}
-	if (!(*str = malloc(sizeof(char) * len)))
-		return ;
-	(*str)[len - 1] = '\0';
-	len--;
-	if (nb == 0)
-		(*str)[0] = '0';
-	while (nb != 0)
-	{
-		(*str)[--len] = nb % 8 + '0';
-		nb = nb / 8;
-	}
+	str = 0;
+	ft_uitoa_base(&str, param, 2);
+	if (map->precision == 0 && param == 0)
+		str[0] = '\0';
+	ft_fill(map, &str, 0);
+	n = ft_strlen(str);
+	write(1, str, n);
+	free(str);
+	map->sizefinal += n;
+	map->all += map->sizeflags;
 }

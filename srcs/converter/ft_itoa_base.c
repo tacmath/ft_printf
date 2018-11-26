@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/05 12:17:03 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 14:25:26 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/22 11:00:24 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,26 +20,20 @@ static int	ft_base(int n)
 	return (n);
 }
 
-static int	ft_len(uintmax_t nb)
+void		ft_uitoa_base(char **str, uintmax_t param, int base)
 {
-	int n;
+	int			len;
+	uintmax_t	nb;
 
-	n = 1;
+	nb = param;
+	len = 1;
 	if (nb == 0)
-		n++;
+		len++;
 	while (nb != 0)
 	{
-		nb = nb / 16;
-		n++;
+		nb = nb / base;
+		len++;
 	}
-	return (n);
-}
-
-void		ft_itoa_basex(char **str, uintmax_t param)
-{
-	int len;
-
-	len = ft_len(param);
 	if (!(*str = malloc(sizeof(char) * len)))
 		return ;
 	(*str)[len - 1] = '\0';
@@ -48,29 +42,29 @@ void		ft_itoa_basex(char **str, uintmax_t param)
 		(*str)[0] = '0';
 	while (param != 0)
 	{
-		(*str)[--len] = ft_base(param % 16) + '0';
-		param = param / 16;
+		(*str)[--len] = ft_base(param % base) + '0';
+		param = param / base;
 	}
 }
 
-void		ft_itoa_baseupx(char **str, uintmax_t param)
+void		ft_itoa_hex(char **str, uintmax_t param)
 {
 	int n;
 
 	n = -1;
-	ft_itoa_basex(str, param);
+	ft_uitoa_base(str, param, 16);
 	while ((*str)[++n])
 		if ((*str)[n] >= 'a' && (*str)[n] <= 'f')
 			(*str)[n] = (*str)[n] - 32;
 }
 
-void		ft_itoa_basep(char **str, uintmax_t param)
+void		ft_itoa_p(char **str, uintmax_t param)
 {
 	char	*tmp;
 	int		n;
 
 	n = -1;
-	ft_itoa_basex(&tmp, param);
+	ft_uitoa_base(&tmp, param, 16);
 	while (tmp[++n])
 		;
 	if (!(*str = malloc(sizeof(char) * (n + 2))))

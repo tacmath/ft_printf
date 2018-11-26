@@ -6,7 +6,7 @@
 #    By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/11/05 12:24:50 by mtaquet      #+#   ##    ##    #+#        #
-#    Updated: 2018/11/16 11:24:27 by mtaquet     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/11/22 11:23:14 by mtaquet     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,6 @@ SRCDIR = srcs/
 INCDIR = includes/
 CONVFILES =	ft_itoa.c\
 			ft_itoa_base.c\
-			ft_itoa_octal.c\
 			ft_atoi.c\
 			ft_dtoa.c\
 
@@ -26,6 +25,7 @@ SRCFILES =	utils.c\
 			check.c\
 			addother.c\
 			addunsigned.c\
+			addbonus.c\
 			fill.c\
 			treatlenth.c\
 			$(addprefix $(CONVDIR),$(CONVFILES))\

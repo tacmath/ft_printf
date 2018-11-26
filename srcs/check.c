@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/03 11:43:48 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 15:58:22 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/22 11:59:41 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,15 +41,14 @@ static void	ft_get_lenth(t_printf *map, char c)
 		map->lenth.upl = 1;
 }
 
-void		ft_check(t_printf *map, char *str)
+void		ft_check(t_printf *map, char *str, va_list *ap, int n)
 {
-	int n;
-
-	n = 0;
-	while (ft_strchr("#+- lhjzL.0123456789", str[++n]) && str[n] != '\0')
+	while (ft_strchr("#+- lhjzL.*0123456789", str[++n]) && str[n] != '\0')
 	{
 		if (ft_strchr("#+-0 ", str[n]))
 			ft_check_flags(map, str[n]);
+		if (str[n] == '*' && str[n - 1] != '.')
+			map->nb_space = va_arg(*ap, int);
 		if (str[n] >= '1' && str[n] <= '9')
 		{
 			map->nb_space = ft_atoi(&(str[n]));
@@ -59,6 +58,8 @@ void		ft_check(t_printf *map, char *str)
 		if (str[n] == '.')
 		{
 			map->precision = ft_atoi(&(str[n + 1]));
+			if (str[n + 1] == '*')
+				map->precision = va_arg(*ap, int);
 			while (str[n + 1] >= '0' && str[n + 1] <= '9')
 				n++;
 		}

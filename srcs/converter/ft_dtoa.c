@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/05 12:17:50 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 16:05:14 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/22 12:10:15 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,12 +23,12 @@ static long double	ft_decimal(long double param, int precision)
 	return (param);
 }
 
-static int		ft_len(long double nb)
+static int			ft_len(long double nb)
 {
 	int len;
 
 	len = 1;
-	if (nb == 0)
+	if (nb < 1 && nb > -1)
 		len++;
 	while (nb >= 1 || nb <= -1)
 	{
@@ -38,27 +38,28 @@ static int		ft_len(long double nb)
 	return (len);
 }
 
-static int		ft_dmod(long double nb, int mod)
+static int			ft_dmod(long double nb, int mod)
 {
 	if (nb < 0)
 		nb = -nb;
 	return ((int)(nb - ((uintmax_t)(nb / mod) * mod)));
 }
 
-static void			ft_dtoa_int(char **str, long double param, int precision, int neg)
+static void			ft_dtoa_int(char **str,
+	long double param, int precision, int neg)
 {
 	long double	nb;
-	int		len;
+	int			len;
 
 	len = ft_len(param) + neg;
 	nb = param;
 	if (precision != 0)
 		len += precision;
-	if (!(*str = malloc(sizeof(char) * len)))
+	if (!(*str = malloc(sizeof(char) * (len + 1))))
 		return ;
 	if (precision != 0)
 		(*str)[len - precision - 1] = '.';
-	(*str)[len - 1] = '\0';
+	(*str)[len] = '\0';
 	if (nb == 0)
 		(*str)[0] = '0';
 	len = len - precision - 1;
@@ -69,10 +70,10 @@ static void			ft_dtoa_int(char **str, long double param, int precision, int neg)
 	}
 }
 
-void			ft_dtoa(char **str, long double param, int precision)
+void				ft_dtoa(char **str, long double param, int precision)
 {
-	int			len;
-	int			neg;
+	int				len;
+	int				neg;
 	long double		nb;
 	long double		decimal;
 
@@ -81,8 +82,8 @@ void			ft_dtoa(char **str, long double param, int precision)
 		neg = 1;
 	if (param < 0)
 		param = -param;
-	decimal = ft_decimal(param, precision); 
-	if ((uintmax_t)decimal != (uintmax_t)(decimal + 0.5))
+	decimal = ft_decimal(param, precision);
+	if (ft_len(decimal) != ft_len(decimal + 0.5))
 		param++;
 	ft_dtoa_int(str, param, precision, neg);
 	nb = (uintmax_t)decimal;

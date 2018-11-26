@@ -6,7 +6,7 @@
 /*   By: mtaquet <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/05 12:09:44 by mtaquet      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/19 16:00:33 by mtaquet     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/22 11:54:19 by mtaquet     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,12 +56,10 @@ char					*ft_strjoin(char *s1, char *s2);
 char					*ft_addstr(char *s1, char *s2, int i);
 void					ft_dtoa(char **str, long double param, int precision);
 void					ft_itoa(char **str, intmax_t param);
-void					ft_uitoa(char **str, uintmax_t param);
-void					ft_itoa_octal(char **str, uintmax_t param);
-void					ft_itoa_basex(char **str, uintmax_t param);
-void					ft_itoa_baseupx(char **str, uintmax_t param);
-void					ft_itoa_basep(char **str, uintmax_t param);
-void					ft_check(t_printf *map, char *str);
+void					ft_uitoa_base(char **str, uintmax_t param, int base);
+void					ft_itoa_hex(char **str, uintmax_t param);
+void					ft_itoa_p(char **str, uintmax_t param);
+void					ft_check(t_printf *map, char *str, va_list *ap, int n);
 char					*ft_strdup(const char *src);
 void					ft_normalstr(t_printf *map, char *str);
 char					*ft_strncpy(char *dest, char *src, int i);
@@ -77,6 +75,7 @@ void					ft_convpadd(t_printf *map, void *param);
 void					ft_hexadd(t_printf *map, uintmax_t param);
 void					ft_hexupadd(t_printf *map, uintmax_t param);
 void					ft_octaladd(t_printf *map, uintmax_t param);
+void					ft_binaireadd(t_printf *map, uintmax_t param);
 void					ft_allunsigned(t_printf *map, uintmax_t arg);
 void					ft_longlong(t_printf *map, va_list *ap);
 void					ft_long(t_printf *map, va_list *ap);
